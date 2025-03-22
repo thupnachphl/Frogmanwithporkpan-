@@ -182,10 +182,37 @@
             document.getElementById("total-price").textContent = totalPrice;
         }
 
-        function removeFromCart(name) {
-            delete cart[name];
-            updateCart();
-        }
+        function placeOrder() {
+    if (Object.keys(cart).length === 0) {
+        alert("⚠️ กรุณาเลือกสินค้าในตะกร้าก่อนทำการสั่งซื้อ!");
+        return;
+    }
+
+    let orderSummary = "🛒 รายการสั่งซื้อ:\n";
+    let totalPrice = 0;
+
+    for (let name in cart) {
+        let item = cart[name];
+        let itemTotal = item.price * item.quantity;
+        totalPrice += itemTotal;
+        orderSummary += `✅ ${name} (${item.quantity} ชิ้น) - ${itemTotal} บาท\n`;
+    }
+
+    orderSummary += `\n💰 ราคารวมทั้งหมด: ${totalPrice} บาท\n\n🎉 ขอบคุณที่สั่งซื้อ!`;
+
+    alert(orderSummary);
+
+    // เพิ่มข้อความ "มีคนสั่ง" ในการสั่งซื้อ
+    document.getElementById("cart-items").innerHTML = "<p>มีคนสั่งแล้ว!</p>";
+    setTimeout(() => { // คืนค่าการแสดงตะกร้าหลังจากเวลาผ่านไป
+        updateCart();
+    }, 2000);
+
+    // ล้างตะกร้าหลังจากสั่งซื้อ
+    cart = {};
+}
+
+    
 
         function placeOrder() {
             if (Object.keys(cart).length === 0) {
