@@ -1,0 +1,25 @@
+unction filterMenu() {
+    var category = document.getElementById("menu-filter").value;
+    var items = document.querySelectorAll(".menu-item");
+
+    items.forEach(function(item) {
+        if (category === "all" || item.classList.contains(category)) {
+            item.style.display = "flex";
+        } else {
+            item.style.display = "none";
+        }
+    });
+}
+
+// ฟังก์ชันเพิ่ม/ลดจำนวน
+function changeQuantity(menu, amount) {
+    var countElement = document.getElementById(menu + "-count");
+    var currentCount = parseInt(countElement.textContent);
+
+    // ตรวจสอบไม่ให้ค่าติดลบ
+    var newCount = currentCount + amount;
+    if (newCount < 0) newCount = 0;
+
+    // อัปเดตค่าใน <span>
+    countElement.textContent = newCount;
+}
